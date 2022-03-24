@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
@@ -18,6 +19,19 @@ android {
         }
     }
 
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = "com.github.HuukSocial"
+                artifactId = "GPUVideo-android"
+                version = "1.0"
+                from(components["release"])
+            }
+        }
+    }
 }
 
 dependencies {
