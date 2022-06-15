@@ -94,8 +94,10 @@ public class GPUPlayerRenderer extends GlFrameBufferObjectRenderer implements Su
         previewFilter = new GlPreviewFilter(previewTexture.getTextureTarget());
         previewFilter.setup();
 
-        Surface surface = new Surface(previewTexture.getSurfaceTexture());
-        uiHandler.post(() -> simpleExoPlayer.setVideoSurface(surface));
+        if (simpleExoPlayer != null) {
+            Surface surface = new Surface(previewTexture.getSurfaceTexture());
+            uiHandler.post(() -> simpleExoPlayer.setVideoSurface(surface));
+        }
 
         Matrix.setLookAtM(VMatrix, 0,
                 0.0f, 0.0f, 5.0f,
@@ -175,6 +177,11 @@ public class GPUPlayerRenderer extends GlFrameBufferObjectRenderer implements Su
 
     void setSimpleExoPlayer(SimpleExoPlayer simpleExoPlayer) {
         this.simpleExoPlayer = simpleExoPlayer;
+        if (previewTexture != null) {
+            SurfaceTexture surfaceTexture = previewTexture.getSurfaceTexture();
+            Surface surface = new Surface(surfaceTexture);
+            uiHandler.post(() -> simpleExoPlayer.setVideoSurface(surface));
+        }
     }
 
     void release() {
