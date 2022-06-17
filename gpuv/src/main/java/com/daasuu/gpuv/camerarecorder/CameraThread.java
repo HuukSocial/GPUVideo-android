@@ -260,6 +260,7 @@ public class CameraThread extends Thread {
      * change focus
      */
     void changeManualFocusPoint(float eventX, float eventY, int viewWidth, int viewHeight) {
+        if (requestBuilder == null || cameraCaptureSession == null) return;
 
         final int y = (int) ((eventX / (float) viewWidth) * (float) sensorArraySize.height());
         final int x = (int) ((eventY / (float) viewHeight) * (float) sensorArraySize.width());
